@@ -47,7 +47,7 @@ namespace Ticket.Web
             services.AddScoped<IUserRoleDataAccess, UserRoleDataAccess>();
             services.AddScoped<IUserRoleService, UserRoleManager>();
             services.AddScoped<IRedisCacheService, RedisCacheService>();
-            services.AddScoped<IMessagePublisher, MessagePublisher>();
+            services.AddScoped<IMessagePublisher, TicketMessagePublisher>();
             services.AddScoped<IRedisCacheService, RedisCacheService>();
             services.AddScoped<IRabbitMQMessageBroker, RabbitMQMessageBroker>();
             services.AddScoped<IMongoConfiguration, MongoConfiguration>();

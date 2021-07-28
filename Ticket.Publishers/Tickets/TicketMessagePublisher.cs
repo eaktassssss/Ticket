@@ -13,11 +13,11 @@ using Ticket.Results;
 namespace Ticket.Publishers.Tickets
 {
 
-    public class MessagePublisher : IMessagePublisher
+    public class TicketMessagePublisher : IMessagePublisher
     {
         IRabbitMQMessageBroker _messageBroker;
         ITicketDataAccess _ticketDataAccess;
-        public MessagePublisher(IRabbitMQMessageBroker messageBroker, ITicketDataAccess ticketDataAccess)
+        public TicketMessagePublisher(IRabbitMQMessageBroker messageBroker, ITicketDataAccess ticketDataAccess)
         {
             _messageBroker = messageBroker;
             _ticketDataAccess = ticketDataAccess;
