@@ -16,8 +16,6 @@ using Ticket.Extensions.Redis;
 using Microsoft.EntityFrameworkCore;
 using Ticket.Publishers.Tickets;
 using Ticket.MessageBroker.RabbitMQ;
-using Ticket.Configuration.Elastic;
-
 
 namespace Ticket.Web
 {

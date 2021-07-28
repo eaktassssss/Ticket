@@ -8,8 +8,8 @@ namespace Ticket.Consumers.Configuration
 {
     public static class ElasticConfig
     {
-        public static string ConnectionString { get { return "http://localhost:9200"};}
-        public static string UserName { get { return "elastic"};}
-        public static string Password { get { return "pwd123456**"};}
+        public static string ConnectionString { get { return "http://localhost:9200"; }}
+        public static string UserName { get { return "elastic"; }}
+        public static string Password { get { return "******"; }}
     }
 }

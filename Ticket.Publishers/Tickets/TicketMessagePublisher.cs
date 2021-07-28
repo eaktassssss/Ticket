@@ -9,7 +9,6 @@ using Ticket.DataAccess.Concrete;
 using Ticket.Dtos.Tickets;
 using Ticket.MessageBroker.RabbitMQ;
 using Ticket.Results;
-
 namespace Ticket.Publishers.Tickets
 {
 
