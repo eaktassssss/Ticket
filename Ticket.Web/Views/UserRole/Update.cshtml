@@ -1,0 +1,61 @@
+﻿@using Ticket.Dtos.UserRoles
+@model UserRoleDto
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .text-danger {
+        font-size: 10px;
+        font-weight: bold;
+        color: red
+    }
+</style>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Yetki Bilgileri Düzenle</h3>
+                </div>
+                <form role="form" asp-action="Update" asp-controller="UserRole">
+                    <input type="hidden" asp-for="Id" value="@Model.Id" />
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <select class="form-control" asp-for="RoleId">
+                                            @foreach (var item in ViewBag.Roles)
+                                            {
+                                                <option value="@item.Value">@item.Text</option>
+                                            }
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <select class="form-control" asp-for="UserId">
+                                            @foreach (var item in ViewBag.Users)
+                                            {
+                                                <option value="@item.Value">@item.Text</option>
+                                            }
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">Kaydet</button> <a href="@Url.Action("Create","UserRole")"><button type="button" class="btn btn-primary">Geri Dön</button></a> 
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+

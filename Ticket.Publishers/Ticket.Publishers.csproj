@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ticket.DataAccess\Ticket.DataAccess.csproj" />
+    <ProjectReference Include="..\Ticket.Dtos\Ticket.Dtos.csproj" />
+    <ProjectReference Include="..\Ticket.MessageBroker\Ticket.MessageBroker.csproj" />
+    <ProjectReference Include="..\Ticket.Results\Ticket.Results.csproj" />
+  </ItemGroup>
+
+</Project>

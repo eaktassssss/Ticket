@@ -1,0 +1,149 @@
+﻿@using Ticket.Dtos.Tickets
+@model List<TicketListDto>
+
+@{
+    ViewData["Title"] = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title">Kullanıcı Listesi</h3>
+    </div>
+    <div class="box-body">
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Çağrı Kodu</th>
+                    <th>Müşteri</th>
+                    <th>Çağrı Tipi</th>
+                    <th>Etki</th>
+                    <th>Aciliyet</th>
+                    <th>Durum</th>
+                    <th>Konu</th>
+                    <th>Açıklama</th>
+                    <th>Kayıt Tarihi</th>
+                    <th>Güncellenme Tarihi</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@item.SpecialCode</td>
+                    <td style="font-weight:bold">@item.CustomerName</td>
+                    <td>
+                        @switch (item.TypeName)
+                        {
+                            case "Yeni":
+                                <small style="font-size:13px" class="label label-success"><i class="fa fa-clock-o"></i>&nbsp;@item.TypeName</small>
+                                break;
+                            case "Bug":
+                                <small style="font-size:13px" class="label label-danger"><i class="fa fa-clock-o"></i>&nbsp;@item.TypeName</small>
+                                break;
+                            default:
+                                break;
+                        }
+                   
+                    </td>
+                    <td>@item.ImpactName</td>
+                    <td>@item.UrgencyName</td>
+                    <td>
+                        @switch (item.StatusName)
+                        {
+                            case "Yeni":
+                                <small style="font-size:13px" class="label label-primary"><i class="fa fa-clock-o"></i>&nbsp;@item.StatusName</small>
+                                break;
+                            case "Kabul Edildi":
+                                <small style="font-size:13px" class="label label-warning"><i class="fa fa-clock-o"></i>&nbsp;@item.StatusName</small>
+                                break;
+                            case "Reddedildi":
+                                <small style="font-size:13px" class="label label-danger"><i class="fa fa-clock-o"></i>&nbsp;@item.StatusName</small>
+                                break;
+                            case "Üzerinde Çalışılıyor":
+                                <small style="font-size:13px" class="label label-info"><i class="fa fa-clock-o"></i>&nbsp;@item.StatusName</small>
+                                break;
+                            case "Çözüldü":
+                                <small style="font-size:13px" class="label label-success"><i class="fa fa-clock-o"></i>&nbsp;@item.StatusName</small>
+                                break;
+                            case "Kapatıldı":
+                                <small style="font-size:13px" class="label label-default"><i class="fa fa-clock-o"></i>&nbsp;@item.StatusName</small>
+                                break;
+                            default:
+                                break;
+                        }
+                    </td>
+                    <td><button id="btnSubject" class="btn btn-info" data-subject="@item.SubjectHeading"><i class=" fa fa-info"></i></button></td>
+                    <td><button id="btnDescription" class="btn btn-info" data-description="@item.Descripton"><i class=" fa fa-info"></i></button></td>
+                    <td>@item.CreatedDate</td>
+                    <td>@item.UpdatedDate</td>
+                    <td align="center">
+                        <a href="@Url.Action("Update","Ticket",new { id=item.Id})">
+                            <button class="btn btn-primary">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                        </a>
+                        &nbsp; &nbsp;
+
+                        <button id="deleteTicket" data-id="@item.Id" class="btn btn-danger">
+                            <i class="fa fa-trash"></i>
+                        </button>
+
+                    </td>
+                </tr>
+                }
+
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Çağrı Kodu</th>
+                    <th>Müşteri</th>
+                    <th>Çağrı Tipi</th>
+                    <th>Etki</th>
+                    <th>Aciliyet</th>
+                    <th>Durum</th>
+                    <th>Konu</th>
+                    <th>Açıklama</th>
+                    <th>Kayıt Tarihi</th>
+                    <th>Güncellenme Tarihi</th>
+                    <th>İşlemler</th>
+                </tr>
+            </tfoot>
+        </table>
+        <div class="modal fade" id="exampleModal1" data-backdrop tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Çağrı Konu Başlığı</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p id="subject"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="exampleModal2" data-backdrop tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Çağrı Detaylı Açıklaması</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p id="description"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/jquery.min.js"></script>
+<script src="~/content/custom/js/tickets.js"></script>

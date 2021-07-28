@@ -1,0 +1,101 @@
+﻿@using Ticket.Dtos.Tickets
+@model TicketDto
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .text-danger {
+        font-size: 10px;
+        font-weight: bold;
+        color: red
+    }
+</style>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Çağrı Bilgileri</h3>
+                </div>
+                <form role="form" asp-action="Create" asp-controller="Ticket">
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Müşteri</label>
+                                    <select class="form-control" asp-for="CustomerId">
+                                        @foreach (var item in ViewBag.Customers)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    </select>
+                                </div>
+
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Etki Alanı</label>
+                                    <select class="form-control" asp-for="UrgencyId">
+                                        @foreach (var item in ViewBag.Urgencies)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    </select>
+                                </div>
+
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Aciliyet</label>
+                                    <select class="form-control" asp-for="ImpactId">
+                                        @foreach (var item in ViewBag.Impacts)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    </select>
+                                </div>
+
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Çağrı Tipi</label>
+                                    <select class="form-control" asp-for="TypeId">
+                                        @foreach (var item in ViewBag.Types)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    </select>
+                                </div>
+
+                            </div>
+                           
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Başlık</label>
+                                    <textarea asp-for="SubjectHeading" rows="3" type="text" class="form-control"></textarea>
+                                </div>
+                                <span asp-validation-for="SubjectHeading" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Çağrı Detayı</label>
+                                    <textarea asp-for="Descripton" rows="6" type="text" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">Kaydet</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</section>
+

@@ -1,0 +1,157 @@
+﻿@using Ticket.Dtos.Users
+@model UserDto
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .text-danger {
+        font-size: 10px;
+        font-weight: bold;
+        color: red
+    }
+</style>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Kullanıcı Bilgileri</h3>
+                </div>
+                <form role="form" asp-action="Create" asp-controller="User">
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Ad</label>
+                                    <input asp-for="Name" type="text" class="form-control">
+                                </div>
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Soyad</label>
+                                    <input asp-for="Surname" type="text" class="form-control">
+                                </div>
+                                <span asp-validation-for="Surname" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Tc</label>
+                                    <input asp-for="IdentityNumber" type="text" class="form-control">
+                                </div>
+                                <span asp-validation-for="IdentityNumber" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input asp-for="Email" type="text" class="form-control">
+                                </div>
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Gsm</label>
+                                    <input asp-for="Gsm" type="text" class="form-control">
+                                </div>
+                                <span asp-validation-for="Gsm" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Şifre</label>
+                                    <input asp-for="Password" type="password" class="form-control">
+                                </div>
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">Kaydet</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Kullanıcı Listesi</h3>
+        </div>
+        <div class="box-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Ad</th>
+                        <th>Soyad</th>
+                        <th>Tc</th>
+                        <th>Email</th>
+                        <th>Gsm</th>
+                        <th>Kayıt Tarihi</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in ViewBag.Users)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>
+                                @item.Surname
+                            </td>
+                            <td>@item.IdentityNumber</td>
+                            <td>@item.Email</td>
+                            <td>@item.Gsm</td>
+                            <td>@item.CreatedDate</td>
+                            <td align="center">
+                                <a href="@Url.Action("Update","User",new { id=item.Id})">
+                                    <button class="btn btn-primary">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                </a>
+                                &nbsp; &nbsp;
+                                <button id="deleteUser" data-id="@item.Id" class="btn btn-danger">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+ 
+
+ 
+
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Ad</th>
+                        <th>Soyad</th>
+                        <th>Tc</th>
+                        <th>Email</th>
+                        <th>Gsm</th>
+                        <th>Kayıt Tarihi</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="~/js/jquery.min.js"></script>
+<script src="~/content/custom/js/users.js"></script>
+

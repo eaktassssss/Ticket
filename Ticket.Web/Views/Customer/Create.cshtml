@@ -1,0 +1,192 @@
+﻿@using Ticket.Dtos.Customers
+@model CustomerDto
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .text-danger {
+        font-size: 10px;
+        font-weight: bold;
+        color: red
+    }
+</style>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Müşteri Bilgileri</h3>
+                </div>
+                <form role="form" asp-action="Create" asp-controller="Customer">
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Firma İsmi</label>
+                                    <input asp-for="Title" type="text" class="form-control">
+                                </div>
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Gsm</label>
+                                    <input asp-for="Gsm" type="text" class="form-control">
+                                </div>
+                                <span asp-validation-for="Gsm" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input asp-for="Email" type="text" class="form-control">
+                                </div>
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Birincil İletişim Kişisi</label>
+                                    <input asp-for="PrimaryContactUserNameSurname" type="text" class="form-control">
+                                </div>
+                                <span asp-validation-for="PrimaryContactUserNameSurname" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Birincil İletişim Email</label>
+                                    <input asp-for="PrimaryContactUserEmail" type="text" class="form-control">
+                                </div>
+                                <span asp-validation-for="PrimaryContactUserEmail" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Efor Onay Limit</label>
+                                    <select id="approval" asp-for="EffortApprovalTemporary" class="form-control">
+                                        <option  value="1">İsyeniyor</option>
+                                        <option selected value="0">İstenmiyor</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Efor  Onay Limiti</label>
+                                        <input asp-for="EffortApprovalLimit" onkeypress="return isNumberKey(event)" type="text" class="form-control">
+                                    </div>
+                                    <span asp-validation-for="EffortApprovalLimit" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">Kaydet</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Müşteri Listesi</h3>
+        </div>
+        <div class="box-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Firma İsmi</th>
+                        <th>Gsm</th>
+                        <th>Email</th>
+                        <th>Birincil İletişim</th>
+                        <th>Birincil Email</th>
+                        <th>Efor Onayı</th>
+                        <th>Efor Onayı Limiti</th>
+                        <th>Kayıt Tarihi</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in ViewBag.Customers)
+                    {
+                        <tr>
+                            <td>@item.Title</td>
+                            <td>
+                                @item.Gsm
+                            </td>
+
+                            <td>@item.Email</td>
+                            <td>@item.PrimaryContactUserNameSurname</td>
+                            <td>@item.PrimaryContactUserEmail</td>
+                            @if (item.EffortApproval)
+                            {
+                                <td> <small style="font-size:13px" class="label label-success"><i class="fa fa-clock-o"></i>&nbsp;İsteniyor</small></td>
+
+                            }
+                            else
+                            {
+                                <td><small style="font-size:13px" class="label label-danger"><i class="fa fa-clock-o"></i>&nbsp;İstenmiyor</small></td>
+
+                            }
+                            @if (item.EffortApproval)
+                            {
+                                <td><button id="btnlimit" class="btn btn-info" data-address="@item.EffortApprovalLimit"><i class=" fa fa-info"></i></button></td>
+
+                            }
+                            else
+                            {
+                                <td><button id="btnlimit" disabled class="btn btn-info" data-address="@item.EffortApprovalLimit"><i class=" fa fa-info"></i></button></td>
+
+                            }
+
+                            <td>@item.CreatedDate</td>
+                            <td align="center">
+                                <a href="@Url.Action("Update","Customer",new { id=item.Id})">
+                                    <button class="btn btn-primary">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                </a>
+
+                                &nbsp; &nbsp;
+                                <button id="deleteCustomer" data-id="@item.Id" class="btn btn-danger">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Firma İsmi</th>
+                        <th>Gsm</th>
+                        <th>Email</th>
+                        <th>Birincil İletişim</th>
+                        <th>Birincil Email</th>
+                        <th>Efor Onayı</th>
+                        <th>Efor Onayı Limiti</th>
+                        <th>Kayıt Tarihi</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModal1" data-backdrop tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Müşteri Efor Onay  Limit Bilgisi</h5>
+                </div>
+                <div class="modal-body">
+                    <span>Bu müşteri için efor onay limiti  <span id="fulladdress"></span> dakika olarak belirlenmiştir</span>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="~/js/jquery.min.js"></script>
+<script src="~/content/custom/js/customers.js"></script>
+

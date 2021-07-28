@@ -1,0 +1,44 @@
+﻿@using Ticket.Dtos.Roles
+@model RoleDto
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .text-danger {
+        font-size: 10px;
+        font-weight: bold;
+        color: red
+    }
+</style>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Yetki Bilgileri Düzenle</h3>
+                </div>
+                <form role="form" asp-action="Update" asp-controller="Role">
+                    <input type="hidden" asp-for="Id" value="@Model.Id" />
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Ad</label>
+                                    <input asp-for="Name" type="text" class="form-control">
+                                </div>
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">Kaydet</button> <a href="@Url.Action("Create","Role")"><button type="button" class="btn btn-primary">Geri Dön</button></a> 
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
