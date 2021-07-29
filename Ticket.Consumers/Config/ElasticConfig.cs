@@ -10,6 +10,6 @@ namespace Ticket.Consumers.Configuration
     {
         public static string ConnectionString { get { return "http://localhost:9200"; }}
         public static string UserName { get { return "elastic"; }}
-        public static string Password { get { return "******"; }}
+        public static string Password { get { return "pwd123456**"; }}
     }
 }
