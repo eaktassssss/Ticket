@@ -28,9 +28,9 @@ namespace Ticket.Business.Concrete
             _userRoleDataAccess = userRoleDataAccess;
         }
         #endregion
-        public async Task<Result> Insert(UserDto user)
+        public async Task<Result> Insert(UserCreatedDto user)
         {
-
+            //TODO: Düzenlenecek
             var response = new Result();
             try
             {
@@ -92,23 +92,48 @@ namespace Ticket.Business.Concrete
                 Email = x.Email,
                 IdentityNumber = x.IdentityNumber,
                 CreatedDate = x.CreatedDate,
-                UpdatedDate=x.UpdatedDate,
+                UpdatedDate = x.UpdatedDate,
                 Gsm = x.Gsm,
                 Id = x.Id
-            }).OrderByDescending(x=> x.UpdatedDate).ToList();
+            }).OrderByDescending(x => x.UpdatedDate).ToList();
         }
-        public async Task<Result> Update(UserDto user)
+        public async Task<Result> Update(UserUpdatedDto user)
         {
             try
             {
                 var response = new Result();
-                var model = await _userDataAccess.GetById(user.Id).ConfigureAwait(false);
-                if (!String.IsNullOrEmpty(user.Password))
-                    model.PasswordHash = _hashService.CreateHash(user.Password, _hashService.CreateSalt());
-                model.Email = user.Email; model.Surname = user.Surname; model.Gsm = user.Gsm; model.Name = user.Name; model.IdentityNumber = user.IdentityNumber; model.UpdatedDate = DateTime.Now;
-                var result = await _userDataAccess.Update(model).ConfigureAwait(false);
-                response.IsSuccessful = result != null ? true : false;
-                response.Message = response.IsSuccessful == true ? "Düzenleme İşlemi Başarılı" : "Düzenleme İşlemi Başarısız";
+                if (user != null)
+                {
+                    if (user.Id > 0)
+                    {
+                        var count = await _userDataAccess.CountAsync(x => x.IdentityNumber == user.IdentityNumber && x.IsDeleted==false).ConfigureAwait(false);
+                        if (count>1)
+                        {
+                            response.IsSuccessful = false;
+                            response.Message = "Düzenleme İşlemi Başarısız. Tc No başka kullanıcı tarafından kullanılıyor";
+                        }
+                        else
+                        {
+                            var model = await _userDataAccess.GetById(user.Id).ConfigureAwait(false);
+                            if (!String.IsNullOrEmpty(user.Password))
+                                model.PasswordHash = _hashService.CreateHash(user.Password, _hashService.CreateSalt());
+                            model.Email = user.Email; model.Surname = user.Surname; model.Gsm = user.Gsm; model.Name = user.Name; model.IdentityNumber = user.IdentityNumber; model.UpdatedDate = DateTime.Now;
+                            var result = await _userDataAccess.Update(model).ConfigureAwait(false);
+                            response.IsSuccessful = result != null ? true : false;
+                            response.Message = response.IsSuccessful == true ? "Düzenleme İşlemi Başarılı" : "Düzenleme İşlemi Başarısız";
+                        }
+                    }
+                    else
+                    {
+                        response.IsSuccessful = false;
+                        response.Message = "Düzenleme İşlemi Başarısız. İlgili kayıt anahtarı boş olamaz";
+                    }
+                }
+                else
+                {
+                    response.IsSuccessful = false;
+                    response.Message = "Düzenleme İşlemi Başarısız. Kullanıcı bilgileri boş olamaz";
+                }
                 return response;
             }
             catch (Exception exception)
@@ -145,10 +170,10 @@ namespace Ticket.Business.Concrete
 
             return response;
         }
-        public async Task<DataResult<UserDto>> GetById(object key)
+        public async Task<DataResult<UserUpdatedDto>> GetById(object key)
         {
 
-            var response = new DataResult<UserDto>();
+            var response = new DataResult<UserUpdatedDto>();
             var user = await _userDataAccess.GetById(key).ConfigureAwait(false);
 
             if (user == null)
@@ -156,7 +181,7 @@ namespace Ticket.Business.Concrete
                 response.Entity = null; response.IsSuccessful = false;
                 return response;
             }
-            var dto = new UserDto { Id = user.Id, Name = user.Name, Surname = user.Surname, IdentityNumber = user.IdentityNumber, Email = user.Email, Gsm = user.Gsm};
+            var dto = new UserUpdatedDto { Id = user.Id, Name = user.Name, Surname = user.Surname, IdentityNumber = user.IdentityNumber, Email = user.Email, Gsm = user.Gsm };
             response.Entity = dto; response.IsSuccessful = true;
             return response;
         }

@@ -31,7 +31,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Gsm</label>
-                                    <input asp-for="Gsm" type="text" class="form-control">
+                                    <input asp-for="Gsm"  onkeypress="return isNumberKey(event)" type="text" class="form-control">
                                 </div>
                                 <span asp-validation-for="Gsm" class="text-danger"></span>
                             </div>
@@ -62,22 +62,22 @@
                                 <div class="form-group">
                                     <label>Efor Onay Limit</label>
                                     <select id="approval" asp-for="EffortApprovalTemporary" class="form-control">
-                                        <option  value="1">İsyeniyor</option>
+                                        <option value="1">İsyeniyor</option>
                                         <option selected value="0">İstenmiyor</option>
                                     </select>
                                 </div>
                             </div>
 
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Efor  Onay Limiti</label>
-                                        <input asp-for="EffortApprovalLimit" onkeypress="return isNumberKey(event)" type="text" class="form-control">
-                                    </div>
-                                    <span asp-validation-for="EffortApprovalLimit" class="text-danger"></span>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Efor  Onay Limiti</label>
+                                    <input asp-for="EffortApprovalLimit" onkeypress="return isNumberKey(event)" type="text" class="form-control">
                                 </div>
+                                <span asp-validation-for="EffortApprovalLimit" class="text-danger"></span>
                             </div>
-
                         </div>
+
+                    </div>
                     <div class="box-footer">
                         <button type="submit" class="btn btn-primary">Kaydet</button>
                     </div>

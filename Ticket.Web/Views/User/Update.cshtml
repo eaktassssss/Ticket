@@ -1,5 +1,5 @@
 ﻿@using Ticket.Dtos.Users
-@model UserDto
+@model UserUpdatedDto
 @{
     ViewData["Title"] = "Update";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -17,6 +17,9 @@
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">Kullanıcı Bilgileri Düzenle</h3>
+
+                    
+                   
                 </div>
                 <form role="form" asp-action="Update" asp-controller="User">
                     <input type="hidden" asp-for="Id" value="@Model.Id" />
@@ -39,7 +42,7 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label>Tc</label>
-                                    <input asp-for="IdentityNumber" type="text" class="form-control">
+                                    <input asp-for="IdentityNumber" onkeypress="return isNumberKey(event)" type="text" class="form-control">
                                 </div>
                                 <span asp-validation-for="IdentityNumber" class="text-danger"></span>
                             </div>
@@ -53,7 +56,7 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label>Gsm</label>
-                                    <input asp-for="Gsm" type="text" class="form-control">
+                                    <input asp-for="Gsm" onkeypress="return isNumberKey(event)" type="text" class="form-control">
                                 </div>
                                 <span asp-validation-for="Gsm" class="text-danger"></span>
                             </div>
@@ -69,10 +72,14 @@
                     <div class="box-footer">
                         <button type="submit" class="btn btn-primary">Kaydet</button> <a href="@Url.Action("Create","User")"><button type="button" class="btn btn-primary">Geri Dön</button></a>
                     </div>
+                    <div class="box-footer">
+                        <span style="color:red;font-weight:bold;font-size:11px">@ViewBag.Message</span>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 </section>
-
+<script src="~/js/jquery.min.js"></script>
+<script src="~/content/custom/js/users.js"></script>
 

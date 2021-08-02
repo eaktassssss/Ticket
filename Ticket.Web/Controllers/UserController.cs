@@ -26,10 +26,11 @@ namespace Ticket.Web.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<ActionResult> Create(UserDto user)
+        public async Task<ActionResult> Create(UserCreatedDto user)
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.Users = await _userService.List();
                 return View(user);
             }
             else
@@ -45,7 +46,7 @@ namespace Ticket.Web.Controllers
             return View(user.Entity);
         }
         [HttpPost]
-        public async Task<ActionResult> Update(UserDto user)
+        public async Task<ActionResult> Update(UserUpdatedDto user)
         {
             if (!ModelState.IsValid)
             {
@@ -54,8 +55,16 @@ namespace Ticket.Web.Controllers
             }
             else
             {
-                await _userService.Update(user);
-                return RedirectToAction("Create", "User");
+                var result =await _userService.Update(user);
+                if (!result.IsSuccessful)
+                {
+                    ViewBag.Message =result.Message;
+                    return View(user);
+                }
+                else
+                {
+                    return RedirectToAction("Create", "User");
+                }
             }
         }
         public async Task<JsonResult> Delete(int id)

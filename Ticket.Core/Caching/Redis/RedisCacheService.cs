@@ -28,7 +28,6 @@ namespace Ticket.Core.Caching.Redis
                 await _distributedCache.SetStringAsync(key, model, option);
             }
         }
-
         public async Task SetAsync(string key, object data)
         {
             if (data == null)
@@ -41,8 +40,6 @@ namespace Ticket.Core.Caching.Redis
                 await _distributedCache.SetStringAsync(key, model);
             }
         }
-
- 
         public async Task<T> GetAsync<T>(string key)
         {
 
@@ -62,7 +59,6 @@ namespace Ticket.Core.Caching.Redis
         {
             await _distributedCache.RemoveAsync(key);
         }
-
         public async Task RefreshAsync(string key)
         {
             await _distributedCache.RefreshAsync(key);

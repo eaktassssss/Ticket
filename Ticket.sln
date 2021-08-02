@@ -33,7 +33,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ticket.Core", "Ticket.Core\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ticket.Consumers", "Ticket.Consumers\Ticket.Consumers.csproj", "{2734E3A5-AB7E-4C17-ACA3-285B8F5BC95C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ticket.Common", "Ticket.Common\Ticket.Common.csproj", "{3F380AC9-5249-4FA5-B602-D3A1BE738099}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ticket.Common", "Ticket.Common\Ticket.Common.csproj", "{3F380AC9-5249-4FA5-B602-D3A1BE738099}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ticket.Validators", "Ticket.Validators\Ticket.Validators.csproj", "{6FDD1591-E880-4018-83BC-492079506943}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,6 +107,10 @@ Global
 		{3F380AC9-5249-4FA5-B602-D3A1BE738099}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F380AC9-5249-4FA5-B602-D3A1BE738099}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F380AC9-5249-4FA5-B602-D3A1BE738099}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FDD1591-E880-4018-83BC-492079506943}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FDD1591-E880-4018-83BC-492079506943}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FDD1591-E880-4018-83BC-492079506943}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FDD1591-E880-4018-83BC-492079506943}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

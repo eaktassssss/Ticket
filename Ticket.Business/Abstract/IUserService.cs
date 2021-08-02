@@ -11,9 +11,9 @@ namespace Ticket.Business.Abstract
 {
     public interface IUserService
     {
-        Task<Result> Insert(UserDto user);
-        Task<Result> Update(UserDto entitiy);
-        Task<DataResult<UserDto>> GetById(object key);
+        Task<Result> Insert(UserCreatedDto user);
+        Task<Result> Update(UserUpdatedDto entitiy);
+        Task<DataResult<UserUpdatedDto>> GetById(object key);
         Task<List<UserDto>> List();
         Task<Result> Delete(int id);
         Task<DataResult<List<BaseSelectedDto>>> SelectedItem();

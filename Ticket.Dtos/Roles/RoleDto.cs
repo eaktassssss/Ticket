@@ -9,7 +9,6 @@ namespace Ticket.Dtos.Roles
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage ="Zorunlu alan")]
         public string Name { get; set; }
     }
 }

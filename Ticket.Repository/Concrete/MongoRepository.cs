@@ -22,8 +22,6 @@ namespace Ticket.Repository.Concrete
 
         public async Task<List<T>> GetAll(Expression<Func<T, bool>> predicate = null)
         {
-          
-
                 return predicate == null
            ? _collection.AsQueryable().AsEnumerable().ToList()
            : _collection.AsQueryable().Where(predicate).ToList();
@@ -71,8 +69,6 @@ namespace Ticket.Repository.Concrete
         {
             return await _collection.FindOneAndDeleteAsync(filter);
         }
-
-  
     }
 
 }

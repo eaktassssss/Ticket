@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Ticket.Dtos.Users
 {
-    public class UserDto : BaseDto
+    public class UserUpdatedDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

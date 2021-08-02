@@ -1,7 +1,5 @@
 ﻿
-
 using Microsoft.Extensions.DependencyInjection;
-
 namespace Ticket.Extensions.Redis
 {
     public static class RedisConnectExtension

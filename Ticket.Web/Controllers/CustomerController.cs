@@ -24,10 +24,13 @@ namespace Ticket.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(CustomerDto customer)
         {
-            
+
 
             if (!ModelState.IsValid)
+            {
+                ViewBag.Customers = await _customerService.List();
                 return View(customer);
+            }
             else
             {
                 await _customerService.Insert(customer);

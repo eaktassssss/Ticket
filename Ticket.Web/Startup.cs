@@ -16,6 +16,8 @@ using Ticket.Extensions.Redis;
 using Microsoft.EntityFrameworkCore;
 using Ticket.Publishers.Tickets;
 using Ticket.MessageBroker.RabbitMQ;
+using FluentValidation.AspNetCore;
+using Ticket.Validators;
 
 namespace Ticket.Web
 {
@@ -25,13 +27,11 @@ namespace Ticket.Web
         {
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
-
-
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddFluentValidation(f => f.RegisterValidatorsFromAssemblyContaining<DelegateObject>());
             services.AddDbContext<TicketContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TicketConString")));
             services.AddScoped<IUserService, UserManager>();
             services.AddScoped<IUserDataAccess, UserDataAccess>();
