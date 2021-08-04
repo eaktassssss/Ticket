@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Ticket.Constants\Ticket.Constants.csproj" />
     <ProjectReference Include="..\Ticket.Core\Ticket.Core.csproj" />
     <ProjectReference Include="..\Ticket.DataAccess\Ticket.DataAccess.csproj" />

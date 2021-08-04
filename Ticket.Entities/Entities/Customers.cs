@@ -19,6 +19,6 @@ namespace Ticket.Entities.Entities
         public string PrimaryContactUserNameSurname { get; set; }
         public string PrimaryContactUserEmail { get; set; }
         public bool EffortApproval { get; set; }
-        public int EffortApprovalLimit { get; set; }
+        public int EffortApprovalLimit { get;  set; }
     }
 }

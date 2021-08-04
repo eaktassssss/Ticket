@@ -12,6 +12,7 @@ using Ticket.Core.Caching.Redis;
 using Ticket.Constants;
 using MongoDB.Driver;
 using Ticket.Dtos.Dropdowns;
+using AutoMapper;
 
 namespace Ticket.Business.Concrete
 {
@@ -21,10 +22,12 @@ namespace Ticket.Business.Concrete
         #region CustomerDataAccess
         ICustomerDataAccess _customerDataAccess;
         IRedisCacheService _redisCacheService;
-        public CustomerManager(ICustomerDataAccess customerDataAccess, IRedisCacheService redisCacheService)
+        IMapper _mapper;
+        public CustomerManager(ICustomerDataAccess customerDataAccess, IRedisCacheService redisCacheService, IMapper mapper)
         {
             _customerDataAccess = customerDataAccess;
             _redisCacheService = redisCacheService;
+            _mapper = mapper;
         }
         #endregion
         public async Task<Result> Delete(object id)
@@ -49,7 +52,6 @@ namespace Ticket.Business.Concrete
             }
             return response;
         }
-
         public async Task<List<CustomerDropdownDto>> DropCustomer()
         {
             var data = await _redisCacheService.GetAsync<List<CustomerDropdownDto>>(RedisKeyConstans.Customer);
@@ -64,7 +66,6 @@ namespace Ticket.Business.Concrete
                 return data;
             }
         }
-
         public async Task<DataResult<CustomerDto>> GetById(object key)
         {
             var response = new DataResult<CustomerDto>();
@@ -75,13 +76,13 @@ namespace Ticket.Business.Concrete
                 response.Entity = null;
                 return response;
             }
-            var dto = new CustomerDto { Id = customer.Id, Title = customer.Title, PrimaryContactUserEmail = customer.PrimaryContactUserEmail, Gsm = customer.Gsm, Email = customer.Email, CreatedDate = customer.CreatedDate, UpdatedDate = customer.UpdatedDate, IsDeleted = customer.IsDeleted, PrimaryContactUserNameSurname = customer.PrimaryContactUserNameSurname, EffortApprovalLimit = customer.EffortApprovalLimit/60};
+            var dto = _mapper.Map<CustomerDto>(customer);
             dto.EffortApprovalTemporary = dto.EffortApproval == true ? "1" : "0";
+            dto.EffortApprovalLimit = customer.EffortApprovalLimit / 60;
             response.Entity = dto;
             response.IsSuccessful = true;
             return response;
         }
-
         public async Task<Result> Insert(CustomerDto dto)
         {
             var response = new Result();
@@ -95,20 +96,13 @@ namespace Ticket.Business.Concrete
                 }
                 else
                 {
-                    var model = new Customers
-                    {
-                        Title = dto.Title,
-                        Email = dto.Email,
-                        Gsm = dto.Gsm,
-                        PrimaryContactUserNameSurname = dto.PrimaryContactUserNameSurname,
-                        EffortApprovalLimit = dto.EffortApprovalLimit * 60,
-                        EffortApproval = dto.EffortApprovalTemporary == "1" ? true : false,
-                        PrimaryContactUserEmail = dto.PrimaryContactUserEmail,
-                        UpdatedDate = DateTime.Now,
-                        CreatedDate = DateTime.Now,
-                        Id = dto.Id,
-                        IsDeleted = false
-                    };
+
+                    dto.EffortApprovalLimit = dto.EffortApprovalLimit * 60;
+                    dto.EffortApproval = dto.EffortApprovalTemporary == "1" ? true : false;
+                    dto.CreatedDate = DateTime.Now;
+                    dto.UpdatedDate = DateTime.Now;
+                    dto.IsDeleted = false;
+                    var model = _mapper.Map<Customers>(dto);
                     var result = await _customerDataAccess.InsertAsync(model).ConfigureAwait(false);
                     response.IsSuccessful = result != null ? true : false;
                     response.Message = response.IsSuccessful == true ? "Kayıt İşlemi Başarılı" : "Kayıt İşlemi Başarılı";
@@ -123,24 +117,11 @@ namespace Ticket.Business.Concrete
             }
 
         }
-
         public async Task<List<CustomerDto>> List()
         {
             var response = await _customerDataAccess.GetAll().ConfigureAwait(false);
-            return response.Select(x => new CustomerDto
-            {
-                Title = x.Title,
-                Email = x.Email,
-                Gsm = x.Gsm,
-                PrimaryContactUserNameSurname = x.PrimaryContactUserNameSurname,
-                EffortApprovalLimit = x.EffortApprovalLimit,
-                EffortApproval = x.EffortApproval,
-                PrimaryContactUserEmail = x.PrimaryContactUserEmail,
-                Id = x.Id,
-                CreatedDate = x.CreatedDate
-            }).Where(x => x.IsDeleted == false).OrderBy(x => x.Title).ToList();
+            return _mapper.Map<List<CustomerDto>>(response).Where(x => x.IsDeleted == false).OrderBy(x => x.Title).ToList();
         }
-
         public async Task<Result> Update(CustomerDto customer)
         {
             var response = new Result();
@@ -153,7 +134,7 @@ namespace Ticket.Business.Concrete
             model.PrimaryContactUserEmail = customer.PrimaryContactUserEmail;
             model.PrimaryContactUserNameSurname = customer.PrimaryContactUserNameSurname;
             model.EffortApproval = customer.EffortApprovalTemporary == "1" ? true : false;
-            model.EffortApprovalLimit = customer.EffortApprovalLimit*60;
+            model.EffortApprovalLimit = customer.EffortApprovalLimit * 60;
             var result = await _customerDataAccess.UpdateAsync(model, x => x.Id == model.Id).ConfigureAwait(false);
             response.IsSuccessful = result != null ? true : false;
             response.Message = response.IsSuccessful == true ? "Düzenleme İşlemi Başarılı" : "Düzenleme İşlemi Başarısız";

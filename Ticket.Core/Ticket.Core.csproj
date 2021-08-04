@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="8.5.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />
     <PackageReference Include="NEST" Version="7.7.0" />
@@ -14,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Ticket.Configuration\Ticket.Configuration.csproj" />
     <ProjectReference Include="..\Ticket.Dtos\Ticket.Dtos.csproj" />
+    <ProjectReference Include="..\Ticket.Entities\Ticket.Entities.csproj" />
   </ItemGroup>
 
 </Project>

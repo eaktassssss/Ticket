@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Ticket.Common\Ticket.Common.csproj" />
     <ProjectReference Include="..\Ticket.Configuration\Ticket.Configuration.csproj" />
+    <ProjectReference Include="..\Ticket.MessageBroker\Ticket.MessageBroker.csproj" />
     <ProjectReference Include="..\Ticket.Results\Ticket.Results.csproj" />
   </ItemGroup>
 

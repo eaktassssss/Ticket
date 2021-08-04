@@ -18,6 +18,7 @@ using Ticket.Publishers.Tickets;
 using Ticket.MessageBroker.RabbitMQ;
 using FluentValidation.AspNetCore;
 using Ticket.Validators;
+using Ticket.Core.Mapping.AutoMapper;
 
 namespace Ticket.Web
 {
@@ -52,7 +53,10 @@ namespace Ticket.Web
             services.Configure<MongoConfiguration>(Configuration.GetSection("MongoConfiguration"));
             services.AddSingleton<IMongoConfiguration>(x => x.GetRequiredService<IOptions<MongoConfiguration>>().Value);
             services.AddRedisDistributedCacheExtension(Configuration.GetSection("Redis").GetValue<string>("ServerName"));
-
+            services.AddAutoMapper(x =>
+            {
+                x.AddProfile(new MappingProfile());
+            });
         }
 
 
