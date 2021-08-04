@@ -10,6 +10,6 @@ namespace Ticket.MessageBroker.RabbitMQ
     public interface IRabbitMQMessageBroker
     {
         Task Publisher(string data, ExchangeNames exchangeName, RouteKeyNames routeKey);
-        Task<DataResult<T>> Consumer<T>(ExchangeNames exchangeName, RouteKeyNames routeKey);
+        
     }
 }

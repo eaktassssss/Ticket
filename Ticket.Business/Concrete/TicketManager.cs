@@ -52,7 +52,7 @@ namespace Ticket.Business.Concrete
                         UpdatedDate = DateTime.Now,
                         CreatedDate = DateTime.Now,
                         IsDeleted = false,
-                        StatusId = 6,
+                        StatusId = 1,
                     };
                     var result = await _ticketDataAccess.Insert(model).ConfigureAwait(false);
                     response.IsSuccessful = result != null ? true : false;
